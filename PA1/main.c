@@ -1,4 +1,9 @@
-
+/*
+Author: Nathan Brown
+Class : CptS 122, Spring, 2019; Lab Section 3
+Date : January 22, 2020
+Description : 
+*/
 
 #include "fitbit.h"
 
