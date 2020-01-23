@@ -32,4 +32,6 @@ typedef struct fitbit
 	unsigned int steps;
 	Sleep sleepLevel;
 } FitbitData;
-void shift_string(char* str, int size, char* shift_pt);
+void read_csv(FitbitData data[], FILE* infile);
+int clean_row(char* buff);
+void insert(char buff[], int insert_pt, int size);
