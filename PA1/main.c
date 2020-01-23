@@ -16,12 +16,6 @@ int main(void)
 	//Prepare to open file
 	FILE* infile = NULL;
 
-	////Test insertion
-	//printf("%s\n", buff);
-	//insert(buff, 5, 5);
-	//printf("%s\n", buff);
-	//return 0;
-
 	//Read in data
 	read_csv(day_data, infile);
 

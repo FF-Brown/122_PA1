@@ -5,7 +5,7 @@
 void read_csv(FitbitData data[], FILE* infile)
 {
 	char delim[] = ",";
-	int i = 0, result = 0;
+	int i = 0, result = 0, record_count = 0;
 	char* token = '\0';
 	infile = fopen("FitbitData.csv", "r");
 
@@ -30,12 +30,9 @@ void read_csv(FitbitData data[], FILE* infile)
 	while (fgets(buff, 90, infile)) {
 
 		//Clean data row
-		//printf("%s\n", buff);
 		do {
 			result = clean_row(buff);
 		} while (result == 1);
-		//printf("%s\n", buff);
-		//return 0;
 		
 		//Get first token
 		token = strtok(buff, delim);
@@ -48,6 +45,9 @@ void read_csv(FitbitData data[], FILE* infile)
 
 		//One record
 		while (token != NULL) {
+
+			if (i > 50)
+				system("pause");
 
 			//Patient
 			strcpy(data[i].patient, token);
@@ -89,9 +89,10 @@ void read_csv(FitbitData data[], FILE* infile)
 			printf("Sleep Level: %d\n", data[i].sleepLevel);
 			token = strtok(NULL, delim);
 		}
+		++record_count;
 		++i;
 	};
-
+	printf("%d records parsed.\n", record_count);
 }
 int clean_row(char* buff)
 {
@@ -115,7 +116,8 @@ int clean_row(char* buff)
 void insert(char buff[], int insert_pt, int size)
 {
 	//Allocate space for two new elements
-	realloc(buff, sizeof(char) * (3 + size));
+	//realloc(buff, sizeof(char) * (3 + size));
+	//Just kidding, realized this is unnecessary...
 
 	//Shift elements right 2 spaces, up to insertion point.
 	for (int i = size; i >= insert_pt; i--) {
