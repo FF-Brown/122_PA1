@@ -220,12 +220,18 @@ double calc_avg_heartRate(FitbitData data[])
 	double avg = 0.0;
 	int count = 0;
 
+	//Only includes values greater than 0 because
+	//empty fields were filled with 0's.
+	//Heartrate should obviously never be 0
 	for (int i = 0; i < 1440; ++i) {
 		if (data[i].heartRate > 0) {
 			total += data[i].heartRate;
+			//Count number of valid records
 			++count;
 		}
 	}
+
+	//Find average
 	avg = total / (double)count;
 	return avg;
 }
@@ -239,6 +245,8 @@ int max_steps(FitbitData data[])
 {
 	int max = data[0].steps;
 
+	//Checks each value to see whether
+	//it is greater than current max
 	for (int i = 0; i < 1440; ++i) {
 		if (data[i].steps >= max)
 			max = data[i].steps;
