@@ -15,10 +15,6 @@ int main(void)
 	int sleep_start = 0, sleep_end = 0;
 	FitbitData day_data[1500] = { 0 };
 
-	//Not sure what this was for...
-	//char* buff = (char*)malloc(6 * sizeof(char));
-	//strcpy(buff, "ABCDE");
-
 	//Prepare to open file
 	FILE* infile = NULL;
 

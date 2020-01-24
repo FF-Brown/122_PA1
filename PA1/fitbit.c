@@ -2,6 +2,12 @@
 
 #include "fitbit.h"
 
+/*
+	Function: read_csv()
+	Description: Reads and parses records from .csv. Runs cleaning functions on each row.
+	Preconditions: FILE* defined and passed in. Struct array defined. 
+	Postconditions: Array filled with data.
+*/
 void read_csv(FitbitData data[], FILE* infile)
 {
 	char delim[] = ",";
@@ -47,9 +53,6 @@ void read_csv(FitbitData data[], FILE* infile)
 
 		//One record
 		while (token != NULL) {
-
-			//if (i > 50)
-			//	system("pause");
 
 			//Patient
 			strcpy(data[i].patient, token);
@@ -105,6 +108,12 @@ void read_csv(FitbitData data[], FILE* infile)
 	//Close file
 	fclose(infile);
 }
+/*
+	Function: clean_row()
+	Description: Checks a row of data for double commas or dangling commas to correct empty fields. Runs insertion function when necessary. Returns 1 if any issues were corrected to allow for it to be re-run to confirm the absence of further errors.
+	Preconditions: Row of data residing in buffer.
+	Postconditions: Called insert() if necessary. Returns 1 if error corrected, 0 otherwise.
+*/
 int clean_row(char* buff)
 {
 	int size = strlen(buff);
@@ -124,6 +133,12 @@ int clean_row(char* buff)
 	}
 	return found;
 }
+/*
+	Function: insert()
+	Description: Shifts string elements to the right and inserts a 0 to fill empty field.
+	Preconditions: Row of data saved in buffer. Insert point determined. Size of string determined.
+	Postconditions: 0 inserted in string.
+*/
 void insert(char buff[], int insert_pt, int size)
 {
 	//Shift elements right 1 space, up to insertion point.
@@ -133,6 +148,12 @@ void insert(char buff[], int insert_pt, int size)
 	//Insert value
 	buff[insert_pt] = '0';
 }
+/*
+	Function: calc_calories()
+	Description: Calculates total calories burned
+	Preconditions: Data read, cleaned, and parsed
+	Postconditions: Returns total calories burned
+*/
 double calc_calories(FitbitData data[])
 {
 	double total = 0.0;
@@ -142,6 +163,12 @@ double calc_calories(FitbitData data[])
 	}
 	return total;
 }
+/*
+	Function: calc_distance()
+	Description: Calculates total distance walked in miles
+	Preconditions: Data read, cleaned, and parsed
+	Postconditions: Returns total distance walked
+*/
 double calc_distance(FitbitData data[])
 {
 	double total = 0.0;
@@ -151,6 +178,12 @@ double calc_distance(FitbitData data[])
 	}
 	return total;
 }
+/*
+	Function: calc_floors()
+	Description: Calculates total floors walked
+	Preconditions: Data read, cleaned, and parsed
+	Postconditions: Returns total floors walked
+*/
 int calc_floors(FitbitData data[])
 {
 	int total = 0;
@@ -160,6 +193,12 @@ int calc_floors(FitbitData data[])
 	}
 	return total;
 }
+/*
+	Function: calc_steps()
+	Description: Calculates total steps taken
+	Preconditions: Data read, cleaned, and parsed
+	Postconditions: Returns total steps taken
+*/
 int calc_steps(FitbitData data[])
 {
 	int total = 0;
@@ -169,6 +208,12 @@ int calc_steps(FitbitData data[])
 	}
 	return total;
 }
+/*
+	Function: calc_avg_heartRate()
+	Description: Calculates average heartrate
+	Preconditions: Data read, cleaned, and parsed
+	Postconditions: Returns average heartrate
+*/
 double calc_avg_heartRate(FitbitData data[])
 {
 	int total = 0;
@@ -181,9 +226,15 @@ double calc_avg_heartRate(FitbitData data[])
 			++count;
 		}
 	}
-	avg = total / count;
+	avg = total / (double)count;
 	return avg;
 }
+/*
+	Function: max_steps()
+	Description: Finds max number of steps in one minute
+	Preconditions: Data read, cleaned, and parsed
+	Postconditions: Returns max value
+*/
 int max_steps(FitbitData data[])
 {
 	int max = data[0].steps;
@@ -194,6 +245,12 @@ int max_steps(FitbitData data[])
 	}
 	return max;
 }
+/*
+	Function: poor_sleep()
+	Description: Finds greatest period of poor sleep based on severity of sleep deficiency (sum of values), not just length of time.
+	Preconditions: Data read, cleaned, and parsed
+	Postconditions: Returns indices of beginning and end of sleep deficient period via pointers
+*/
 void poor_sleep(FitbitData data[], int* begin_index, int* end_index)
 {
 	int begin_candidate = 0, end_candidate = 0;
